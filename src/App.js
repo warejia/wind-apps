@@ -1,16 +1,18 @@
 import React from 'react';
-import MaxWindSpeedCalculator from './component/MaxWindSpeedCalculator';
+
 import MaxTemperature from './component/MaxTemperature';
 import MaxIrradianceCalculator from './component/MaxIrradiance';
-import WindDataChart from './component/WindDataChart';
+import PredictWindSpeed from './component/WindSpeedForecast';
+
+import MaximumWindSpeed from './component/MaxWindSpeedCalculator';
 
 const App = () => {
   return (
     <div>
       
       <h4>Wind Speed</h4>
-      <MaxWindSpeedCalculator/>
-      <WindDataChart/>
+      <MaximumWindSpeed/>
+      <PredictWindSpeed/>
       <h4>Temperature</h4>
       <MaxTemperature/>
       <h4>Irradiance</h4>

@@ -5,24 +5,24 @@ const weatherApi = {
   baseUrl: 'https://api.openweathermap.org/data/2.5/weather'
 };
 
-const MaxIrradianceCalculator = () => {
+const PredictWindSpeed = () => {
   const [locationInput, setLocationInput] = useState('');
-  const [irradianceInput, setIrradianceInput] = useState('');
-  const [maxIrradiance, setMaxIrradiance] = useState(null);
+  const [windSpeedInput, setWindSpeedInput] = useState('');
+  const [predictedWindSpeed, setPredictedWindSpeed] = useState(null);
 
   const handleLocationChange = (event) => {
     setLocationInput(event.target.value);
   };
 
-  const handleIrradianceChange = (event) => {
-    setIrradianceInput(event.target.value);
+  const handleWindSpeedChange = (event) => {
+    setWindSpeedInput(event.target.value);
   };
 
-  const calculateMaxIrradiance = () => {
-    const irradiance = parseFloat(irradianceInput);
-    if (!isNaN(irradiance)) {
-      setMaxIrradiance(irradiance);
-      setIrradianceInput(''); // Clear the input field
+  const predictWindSpeed = () => {
+    const windSpeed = parseFloat(windSpeedInput);
+    if (!isNaN(windSpeed)) {
+      setPredictedWindSpeed(windSpeed);
+      setWindSpeedInput(''); // Clear the input field
     }
   };
 
@@ -30,8 +30,8 @@ const MaxIrradianceCalculator = () => {
     if (locationInput) {
       getWeatherReport(locationInput)
         .then((data) => {
-          const irradiance = data.main.temp;
-          setIrradianceInput(irradiance.toString());
+          const windSpeed = data.wind.speed;
+          setWindSpeedInput(windSpeed.toString());
         })
         .catch((error) => {
           console.log(error);
@@ -41,8 +41,8 @@ const MaxIrradianceCalculator = () => {
 
   const handleClear = () => {
     setLocationInput('');
-    setIrradianceInput('');
-    setMaxIrradiance(null);
+    setWindSpeedInput('');
+    setPredictedWindSpeed(null);
   };
 
   const getWeatherReport = async (city) => {
@@ -68,22 +68,22 @@ const MaxIrradianceCalculator = () => {
 
       <input
         type="text"
-        placeholder="Enter irradiance value"
-        value={irradianceInput}
-        onChange={handleIrradianceChange}
+        placeholder="Enter wind speed value"
+        value={windSpeedInput}
+        onChange={handleWindSpeedChange}
       />
 
-      <button onClick={calculateMaxIrradiance}>Calculate Max Irradiance</button>
-      <button onClick={handleAutoFill}>Auto Fill Max Irradiance</button>
+      <button onClick={predictWindSpeed}>Predict Wind Speed</button>
+      <button onClick={handleAutoFill}>Auto Fill Wind Speed</button>
       <button onClick={handleClear}>Clear</button>
 
-      {maxIrradiance && (
+      {predictedWindSpeed && (
         <div>
-          <p>Max Irradiance: {maxIrradiance}</p>
+          <p>Predicted Wind Speed: {predictedWindSpeed} m/s</p>
         </div>
       )}
     </div>
   );
 };
 
-export default MaxIrradianceCalculator;
+export default PredictWindSpeed;

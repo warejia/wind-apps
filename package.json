@@ -43,5 +43,10 @@
   },
   "devDependencies": {
     "@types/papaparse": "^5.3.7"
-  }
+  },
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

@@ -1,86 +1,90 @@
 import React, { useState } from 'react';
 
 const MaxWindSpeedCalculator = () => {
-  
+  const [locationInput, setLocationInput] = useState('');
   const [windSpeedInput, setWindSpeedInput] = useState('');
   const [maxWindSpeed, setMaxWindSpeed] = useState(null);
-    const windData = [
-      5.0911684, 3.9763298, 4.32, 3.2599385, 3.5455887, 3.671294, 4.3498964, 5.1919937, 5.3999996, 5.3517847,
-      5.495161, 6.638072, 5.8048253, 6.439876, 5.95906, 5.991594, 5.692099, 6.28713, 5.6920996, 6.0347, 5.937272,
-      5.315336, 5.495161, 5.495161, 6.193674, 6.6087217, 6.28713, 6.379216, 6.379216, 7.24486, 8.0899935, 8.435069,
-      7.653705, 7.10031, 6.9527545, 6.924738, 11.159999, 11.966954, 10.661107, 10.365251, 11.609651, 10.799999,
-      11.090103, 13.755579, 15.124284, 15.778516, 15.1884165, 15.077082, 16.135872, 18.668005, 20.26899,
-      20.608229, 19.483284, 16.78156, 17.068707, 14.982228, 13.089354, 11.457958, 13.392774, 15.30741, 13.493999,
-      12.88981, 14.003028, 14.529915, 14.277983, 13.493999, 13.004922, 11.885453, 12.55879, 14.007655, 12.783802,
-      13.392774, 16.548256, 16.92383, 15.1884165, 15.844089, 14.24163, 16.055353, 21.470612, 22.473343, 22.870626,
-      26.785547, 26.712873, 25.661207, 28.90107, 25.77962, 27.169865, 28.185955, 26.525429, 21.316135, 13.339445,
-      10.041354, 9.19939, 9.931042, 11.966954, 11.525623, 10.105681, 9.085988, 8.654986, 12.641076, 14.689588,
-      14.336861, 15.696165, 15.328561, 15.509274, 14.81259, 12.57426, 13.039754, 14.869351, 14.869351, 15.192682,
-      14.759999, 12.371645, 9.47012, 7.10031, 5.6233797, 5.3517847, 5.6233797, 5.0911684, 4.8433046, 6.151683,
-      5.95906, 5.1919937, 5.1165614, 4.8433046, 4.8433046, 5.1165614, 4.6102495, 4.3349743, 6.1305785, 5.00128,
-      3.0547013, 4.39436, 6.28713, 6.9899354, 6.130579, 5.1544156, 2.5455842, 1.835647, 1.0182338, 2.8116899,
-      1.5273507, 0.35999998, 1.609969, 3.6179552, 6.638072, 5.0142193, 4.896529, 4.802999, 5.4119864, 6.4799995,
-      6.162207, 6.5693827, 7.5685663, 9.028754, 9.746631, 11.165805, 11.525623, 14.039999, 14.654254, 12.313894,
-      13.004922, 13.324863, 13.104198, 13.755579, 13.246826, 13.089354, 14.007655, 14.658676, 17.193533, 18.345877,
-      19.592731, 20.696087, 21.30093, 22.104116, 18.448023, 14.869351, 12.522619, 10.883676, 13.584932, 15.876775,
-      18.709612, 17.429354, 16.992609, 16.485485, 13.049689, 13.1041975, 13.661038, 14.458382, 16.808569, 18.03237,
-      18.416384, 17.294992, 20.969805, 20.833395, 27.80403, 26.368616, 23.710857, 22.73707, 23.510508, 22.380884,
-      19.255793, 16.923828, 14.84318, 13.830749, 17.373497, 16.267857, 15.937878, 11.966953, 10.948973, 7.8954163,
-      6.297428, 6.4096174, 6.1094027, 4.3349743, 5.3517847, 4.510787, 5.315336, 5.3517847, 4.5536795, 3.4152596,
-      2.2768397, 2.4149535, 4.0249224, 4.452954, 3.9763298, 3.319036, 6.162207, 6.8399997, 6.379216, 7.8954163,
-      9.085988, 9.290511, 7.10031, 6.130579, 7.928178, 7.69592, 8.39657, 7.8954163, 6.618519, 7.127636, 7.145796,
-      6.792466, 5.8048253, 6.9153743, 7.127636, 6.638072, 6.6185193, 7.289444, 7.754637, 6.5693827, 7.342588,
-      10.30883, 11.480557, 11.720751, 11.304229, 10.514218, 7.127636, 6.4096174, 7.289445, 8.0899935, 7.9036193,
-      7.289445, 6.8777895, 6.763786, 6.519877, 5.8603754, 5.6920996, 6.151683, 5.8603754, 5.506941, 5.6920996,
-      5.5887027, 5.0528407, 3.7585104, 4.6938252, 4.2136917, 4.6102495, 5.495161, 5.1919937, 6.297428, 5.3999996,
-      6.696387, 6.489992, 6.638072, 5.8048253, 4.452954, 5.495161, 3.396233, 3.7585104, 3.6179552, 3.6179552,
-      3.671294, 3.7585104, 3.671294, 3.0758414, 3.4152596, 3.671294, 5.0142193, 5.634891, 5.0911684, 5.8048253,
-      6.151683, 7.491114, 7.145796, 6.618519, 7.9932966, 5.154415, 4.0249224, 3.6, 2.968636, 3.219938, 2.4149535,
-      4.510787, 3.7064266, 3.7064266, 3.7064266, 4.198285, 5.0142193, 4.829907, 4.8965297, 4.5820518, 4.8965297,
-      4.829907, 4.510787, 4.510787, 2.8116899, 2.6208394, 2.3051248, 4.6102495, 5.1165614, 3.6, 2.5959969,
-      2.3051248, 2.5959969, 2.3051248, 3.0547013, 4.5820518, 4.1046314, 3.319036, 3.0547013, 3.7064266, 4.3498964,
-      4.8965297, 5.0911684, 5.3517847, 6.1305785, 4.8965297, 4.1046314, 5.6233797, 4.8965297, 3.8268526, 3.319036,
-      4.6938257, 5.4833565, 3.396233, 4.1046314, 4.39436, 5.00128, 5.315336, 3.8939953, 4.6938257, 4.68, 4.3349743,
-      4.32, 5.4119864, 5.4477882, 5.937272, 6.28713, 6.0347, 6.379216, 7.172949, 8.225035, 9.227524, 9.227524,
-      8.557102, 7.928178, 5.7599998, 7.172949,
-    ];
-    const handleWindSpeedChange = (event) => {
-      setWindSpeedInput(event.target.value);
-    };
-  
-    const calculateMaxWindSpeed = () => {
-      const windSpeed = parseFloat(windSpeedInput);
-      if (!isNaN(windSpeed)) {
-        const updatedWindData = [...windData, windSpeed];
-        const maxSpeed = Math.max(...updatedWindData);
-        setMaxWindSpeed(maxSpeed);
-        setWindSpeedInput(''); // Clear the input field
-      }
-    };
-  
-    const handleAutoFill = () => {
-      const maxSpeed = Math.max(...windData);
-      setWindSpeedInput(maxSpeed.toString());
-    };
-    const handleClear = () => {
-      setWindSpeedInput('');
-      setMaxWindSpeed(null);
-    };
-  
-    return (
-      <div>
-        <input
-          type="text"
-          placeholder="Enter wind speed"
-          value={windSpeedInput}
-          onChange={handleWindSpeedChange}
-        />
-        
-        <button onClick={handleAutoFill}>Auto fill Max Wind Speed</button>
-        <button onClick={handleClear}>Clear</button>
-        
-      </div>
-    );
+
+  const weatherApi = {
+    key: '9f23b56e8dcad8299bf4e5a2a3fc932b',
+    baseUrl: 'https://api.openweathermap.org/data/2.5/forecast'
   };
-  
-  export default MaxWindSpeedCalculator;
+
+  const handleLocationChange = (event) => {
+    setLocationInput(event.target.value);
+  };
+
+  const handleWindSpeedChange = (event) => {
+    setWindSpeedInput(event.target.value);
+  };
+
+  const calculateMaxWindSpeed = () => {
+    const windSpeed = parseFloat(windSpeedInput);
+    if (!isNaN(windSpeed)) {
+      setMaxWindSpeed(windSpeed);
+      setWindSpeedInput(''); // Clear the input field
+    }
+  };
+
+  const handleAutoFill = () => {
+    if (locationInput) {
+      getWeatherForecast(locationInput)
+        .then((data) => {
+          const windSpeeds = data.list.map((item) => item.wind.speed);
+          const maxSpeed = Math.max(...windSpeeds);
+          setWindSpeedInput(maxSpeed.toString());
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
+  const handleClear = () => {
+    setLocationInput('');
+    setWindSpeedInput('');
+    setMaxWindSpeed(null);
+  };
+
+  const getWeatherForecast = async (city) => {
+    try {
+      const response = await fetch(
+        `${weatherApi.baseUrl}?q=${city}&appid=${weatherApi.key}&cnt=5`
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw new Error('Failed to fetch weather data');
+    }
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Enter location"
+        value={locationInput}
+        onChange={handleLocationChange}
+      />
+
+      <input
+        type="text"
+        placeholder="Enter wind speed value"
+        value={windSpeedInput}
+        onChange={handleWindSpeedChange}
+      />
+
+      <button onClick={calculateMaxWindSpeed}>Calculate Max Wind Speed</button>
+      <button onClick={handleAutoFill}>Auto Fill Max Wind Speed</button>
+      <button onClick={handleClear}>Clear</button>
+
+      {maxWindSpeed && (
+        <div>
+          <p>Max Wind Speed (Observed): {maxWindSpeed} m/s</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default MaxWindSpeedCalculator;
